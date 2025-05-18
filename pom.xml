@@ -218,6 +218,13 @@
                 <version>${mtd.version}</version>
             </dependency>
 
+            <!-- 商家管理 -->
+            <dependency>
+                <groupId>com.mtd</groupId>
+                <artifactId>mtd-detector</artifactId>
+                <version>${mtd.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
@@ -228,6 +235,7 @@
         <module>mtd-quartz</module>
         <module>mtd-generator</module>
         <module>mtd-common</module>
+        <module>mtd-detector</module>
     </modules>
     <packaging>pom</packaging>
 

@@ -61,6 +61,12 @@
             <artifactId>mtd-generator</artifactId>
         </dependency>
 
+        <!-- 商家管理 -->
+        <dependency>
+            <groupId>com.mtd</groupId>
+            <artifactId>mtd-detector</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>
