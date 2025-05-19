@@ -15,6 +15,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <sql id="selecttrafficVo">
         select traffic_id, source_ip, destination_ip, traffic_time, threat_level from malicious_traffic
     </sql>
+<!--    <select id="selectTrafficById" resultType="com.mtd.detector.domain.Traffic">-->
+<!--        SELECT * FROM traffic_table WHERE traffic_id = #{trafficId}-->
+<!--    </select>-->
 
     <select id="selecttrafficList" parameterType="traffic" resultMap="trafficResult">
         <include refid="selecttrafficVo"/>

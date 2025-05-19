@@ -2,6 +2,9 @@ package com.mtd.detector.mapper;
 
 import java.util.List;
 import com.mtd.detector.domain.traffic;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 /**
  * 恶意流量信息Mapper接口
@@ -9,6 +12,7 @@ import com.mtd.detector.domain.traffic;
  * @author lixu
  * @date 2025-05-19
  */
+@Mapper
 public interface trafficMapper 
 {
     /**
@@ -58,4 +62,8 @@ public interface trafficMapper
      * @return 结果
      */
     public int deletetrafficByTrafficIds(Long[] trafficIds);
+//
+//    @Select("SELECT * FROM your_traffic_table_name WHERE traffic_id = #{trafficId}")
+//    traffic selectTrafficById(Long trafficId);
+
 }

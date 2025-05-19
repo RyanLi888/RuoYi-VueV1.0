@@ -2,6 +2,9 @@ package com.mtd.detector.controller;
 
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
+
+import com.mtd.common.core.domain.model.LoginUser;
+import com.mtd.common.utils.ServletUtils;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +23,7 @@ import com.mtd.detector.domain.traffic;
 import com.mtd.detector.service.ItrafficService;
 import com.mtd.common.utils.poi.ExcelUtil;
 import com.mtd.common.core.page.TableDataInfo;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * 恶意流量信息Controller
@@ -34,6 +38,8 @@ public class trafficController extends BaseController
     @Autowired
     private ItrafficService trafficService;
 
+//    @Autowired
+//    private TokenService tokenService;
     /**
      * 查询恶意流量信息列表
      */
@@ -45,7 +51,32 @@ public class trafficController extends BaseController
         List<traffic> list = trafficService.selecttrafficList(traffic);
         return getDataTable(list);
     }
+    /**
+     * 导入恶意流量信息数据
+     */
+    @PreAuthorize("@ss.hasPermi('detector:traffic:import')")
+    @Log(title = "恶意流量信息", businessType = BusinessType.IMPORT)
+    @PostMapping("/importData")
+    public AjaxResult importData(MultipartFile file, boolean updateSupport) throws Exception {
+        ExcelUtil<traffic> util = new ExcelUtil<traffic>(traffic.class);
+        List<traffic> trafficList = util.importExcel(file.getInputStream());
 
+//        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+//        String operName = loginUser.getUsername();
+        String operName = getUsername();
+        String message = trafficService.importTraffic(trafficList, updateSupport, operName);
+        return AjaxResult.success(message);
+    }
+
+    /**
+     * 下载导入恶意流量信息数据模板
+     */
+    @PreAuthorize("@ss.hasPermi('detector:traffic:export')")
+    @PostMapping("/importTemplate")
+    public AjaxResult importTemplate(HttpServletResponse response) {
+        ExcelUtil<traffic> util = new ExcelUtil<traffic>(traffic.class);
+        return util.importTemplateExcel( response,"恶意流量信息数据");
+    }
     /**
      * 导出恶意流量信息列表
      */

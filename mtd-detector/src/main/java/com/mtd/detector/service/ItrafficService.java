@@ -58,4 +58,6 @@ public interface ItrafficService
      * @return 结果
      */
     public int deletetrafficByTrafficId(Long trafficId);
+
+    String importTraffic(List<traffic> trafficList, boolean updateSupport, String operName);
 }
